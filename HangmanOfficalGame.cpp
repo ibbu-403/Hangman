@@ -13,6 +13,35 @@ struct Hnagman{
   int guessCount;
   int wrong;
 };
+void showTitle() {
+    cout << "\n";
+    cout << " _   _    _    _   _  ____ __  __    _    _   _ \n";
+    cout << "| | | |  / \\  | \\ | |/ ___|  \\/  |  / \\  | \\ | |\n";
+    cout << "| |_| | / _ \\ |  \\| | |  _| |\\/| | / _ \\ |  \\| |\n";
+    cout << "|  _  |/ ___ \\| |\\  | |_| | |  | |/ ___ \\| |\\  |\n";
+    cout << "|_| |_/_/   \\_\\_| \\_|\\____|_|  |_/_/   \\_\\_| \\_|\n";
+    cout << "\n";
+}
+void drawHangman(int wrong){
+const char*stages[] = {
+" +---+\n     |\n     |\n     |\n    ===",
+" +---+\n O   |\n     |\n     |\n    ===",
+" +---+\n O   |\n |   |\n     |\n    ===",
+" +---+\n O   |\n/|\\  |\n     |\n    ===",
+" +---+\n O   |\n/|\\  |\n/    |\n    ===",
+" +---+\n O   |\n/|\\  |\n/ \\  |\n    ==="
+};
+  cout << stages[wrong] << endl;
+}
+void showWord(struct Hangman *h){
+for(int i=0; h->word[i]; i++){
+if(strchr(h->guessed,h->word[i]))
+  cout<< h->word[i]<< " ";
+else
+  cout << "_ ";
+}
+cout << endl;
+}
 
 void createWordfile(){
 ofstream file("words.txt");
@@ -62,3 +91,4 @@ int main(){
   
   return 0;  //end program
 }
+
