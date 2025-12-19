@@ -3,7 +3,8 @@
 #include<cstdlib>
 #include<ctime>
 #include<cstring>
-fADSASFD
+#include<cctype>
 
 my name is dhsjdnskds
+
 
