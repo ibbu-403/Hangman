@@ -7,7 +7,7 @@
 
 using namespace std;
 
-struct Hnagman{
+struct Hangman{
   char word[20];
   char guessed[26];
   int guessCount;
@@ -27,6 +27,7 @@ const char*stages[] = {
 " +---+\n     |\n     |\n     |\n    ===",
 " +---+\n O   |\n     |\n     |\n    ===",
 " +---+\n O   |\n |   |\n     |\n    ===",
+" +---+\n O   |\n/|   |\n     |\n    ===",
 " +---+\n O   |\n/|\\  |\n     |\n    ===",
 " +---+\n O   |\n/|\\  |\n/    |\n    ===",
 " +---+\n O   |\n/|\\  |\n/ \\  |\n    ==="
@@ -48,7 +49,7 @@ return true;
   
 void showWord(struct Hangman *h){
 for(int i=0; h->word[i]; i++){
-if(strchr(h->guessed,h->word[i]))
+if(isGuessed(h,h->word[i]))
   cout<< h->word[i]<< " ";
 else
   cout << "_ ";
@@ -56,7 +57,7 @@ else
 cout << endl;
 }
 
-void createWordfile(){
+void createWordFile(){
 ofstream file("words.txt");
 const char words [30][20] = {
         "hangman","computer","science","wizard","keyboard",
@@ -68,8 +69,9 @@ const char words [30][20] = {
 };
   for (int i = 0; i<30;i++){
     file<<words[i]<<endl;
-    file.close();
   }
+file.close();
+}
 
 void loadWord(char *word){
 ifstream file("words.txt");
@@ -78,9 +80,10 @@ int count = 0;
 
 while(file >> words[count]){
 count++;
+  }
+  file.close();
+  strcpy(word, words[rand() % count]);
 }
-file.close;
-strcpy(word, words[rand() % count]);
 
 void playGame(Hangman *h){
   if(h->wrong >= 6){
@@ -101,9 +104,16 @@ cout<<"Guess a letter: ";
 cin>>ch;
 ch = tolower(ch);
 
+  if (!isalpha(ch)) {
+    cout << "? Please enter a valid letter.\n";
+    playGame(h);
+    return;
+}
+
+
 if(!isGuessed(h,ch)){
   h->guessed[h->guessCount++] = ch;
-  if(!strch(h->word;ch))
+  if(!strchr(h->word,ch))
     h->wrong++;
   }
   playGame(h);
@@ -112,7 +122,7 @@ if(!isGuessed(h,ch)){
 int main(){
 
   srand(time(0));
-  createWordfile();   //Function to create file
+  createWordFile();   //Function to create file
 
   char choice;
   do {
@@ -120,6 +130,9 @@ int main(){
       showTitle();
 
     Hangman game{};
+    game.guessCount = 0;
+    game.wrong = 0;
+
     loadWord(game.word);
     playGame(&game);
 
@@ -131,6 +144,7 @@ int main(){
   
   return 0;  //end program
 }
+
 
 
 
