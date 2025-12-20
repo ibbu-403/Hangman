@@ -33,6 +33,19 @@ const char*stages[] = {
 };
   cout << stages[wrong] << endl;
 }
+bool isGuessed(Hangman *h, char c){
+for (int i=0; i<h->guessCount; i++)
+  if(h->guessed[i] == c)
+    return true;
+return false;
+}
+bool wordComplete(Hangman *h){
+for(int i=0; h->word[i]; i++)
+  if(!isGuessed(h, h->word[i]))
+    return false;
+return true;
+}
+  
 void showWord(struct Hangman *h){
 for(int i=0; h->word[i]; i++){
 if(strchr(h->guessed,h->word[i]))
@@ -91,4 +104,5 @@ int main(){
   
   return 0;  //end program
 }
+
 
