@@ -82,12 +82,39 @@ count++;
 file.close;
 strcpy(word, words[rand() % count]);
 
+void playGame(Hangman *h){
+  if(h->wrong >= 6){
+  drawHangman(h->wrong);
+  cout<<"\nYOU LOST! Word was: "<< h->word << endl;
+  return ;
+  }
+if(wordComplete(h)){
+  cout<<"\nYOU WON!\n";
+  return ;
+}
+
+drawHangman(h->wrong);
+showWord(h);
+
+char ch;
+cout<<"Guess a letter: ";
+cin>>ch;
+ch = tolower(ch);
+
+if(!isGuessed(h,ch)){
+  h->guessed[h->guessCount++] = ch;
+  if(!strch(h->word;ch))
+    h->wrong++;
+  }
+  playGame(h);
+}
+
 int main(){
 
   srand(time(0));
   createWordfile();   //Function to create file
 
-  char chocie;
+  char choice;
   do {
       system("cls");  //Clear's the terminal screen
       showTitle();
@@ -104,5 +131,6 @@ int main(){
   
   return 0;  //end program
 }
+
 
 
